@@ -7,41 +7,38 @@ $friendsArray = array();
 if (file_exists($filename)) {
     $file = fopen($filename, "r");
     while (!feof($file)) {
-        $gName = fgets($file);
-        if (!empty(trim($gName))) {
-            array_push($friendsArray, $gName);
+        $gName = trim((fgets($file)));
+        if (strlen($gName) > 0) {
+            $friendsArray[] = $gName;
         }
     }
     fclose($file);
 }
 
 //Adding name to array
-if (isset($_POST['name']) && strlen(trim($_POST['name'])) > 0)
-    array_push($friendsArray, $_POST['name']);
+if (isset($_POST['name']) && strlen(trim($_POST['name'])) > 0) {
+    $friendsArray[] = $_POST['name'];
+}
 
 //Deleting name to array
 if (isset($_POST['delete'])) {
-    unset($friendsArray[intval($_POST['delete'])]);
+    unset($friendsArray[($_POST['delete'])]);
     $friendsArray = array_values($friendsArray);
 }
 
 //Appending to file, write content with names in array
-$file = fopen($filename, "w");
 if (!empty($friendsArray)) {
-    foreach ($friendsArray as $AName)
-        fwrite($file, $AName.PHP_EOL);
+    $file = fopen($filename, "w");
+    foreach ($friendsArray as $AName) {
+        fwrite($file, $AName . PHP_EOL);
+    }
+    fclose($file);
 }
-fclose($file);
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Friend Book</title>
-</head>
-<body>
 <?php include("header.php"); ?>
+
 <br>
 
 <form action="index.php" method="post">
@@ -89,5 +86,3 @@ fclose($file);
 <br>
 <br>
 <?php include("footer.php"); ?>
-</body>
-</html>
