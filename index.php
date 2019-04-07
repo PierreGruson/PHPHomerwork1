@@ -1,5 +1,4 @@
 <?php
-
 $filename = 'friends.txt';
 $friendsArray = array();
 
@@ -32,21 +31,17 @@ foreach ($friendsArray as $AName) {
     fwrite($file, $AName . PHP_EOL);
 }
 fclose($file);
-
-
 ?>
 
 <?php include("header.php"); ?>
 
     <br>
-
     <form action="index.php" method="post">
         Name: <input type="text" name="name">
         <input type="submit">
     </form>
 
     <h1>My Best Friends List :</h1>
-
 
     <form method="post">
         <ul>
@@ -72,16 +67,15 @@ fclose($file);
         </ul>
     </form>
 
-
     <form action="index.php" method="post">
         <input type="text" name="nameFilter" id="nameFilter" value="<?php echo $nameFilter; ?>"/>
         <input type="checkbox"
-               name="startingWith" <?php echo (isset($_POST['startingWith']) && $_POST['startingWith']) ? 'checked' : ''; ?>
-               value="true">Only names starting with</input>
+               name="startingWith" <?php if (isset($_POST['startingWith']) && $_POST['startingWith'] === 'true') echo 'checked'; else echo ''; ?>
+               value="true">Only names starting with</input>s
         <input type="submit" value="Filter List"/>
 
     </form>
+    <br>
+    <br>
 
-    <br>
-    <br>
 <?php include("footer.php"); ?>
