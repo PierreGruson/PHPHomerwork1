@@ -27,62 +27,61 @@ if (isset($_POST['delete'])) {
 }
 
 //Appending to file, write content with names in array
-if (!empty($friendsArray)) {
-    $file = fopen($filename, "w");
-    foreach ($friendsArray as $AName) {
-        fwrite($file, $AName . PHP_EOL);
-    }
-    fclose($file);
+$file = fopen($filename, "w");
+foreach ($friendsArray as $AName) {
+    fwrite($file, $AName . PHP_EOL);
 }
+fclose($file);
+
 
 ?>
 
 <?php include("header.php"); ?>
 
-<br>
+    <br>
 
-<form action="index.php" method="post">
-    Name: <input type="text" name="name">
-    <input type="submit">
-</form>
+    <form action="index.php" method="post">
+        Name: <input type="text" name="name">
+        <input type="submit">
+    </form>
 
-<h1>My Best Friends List :</h1>
+    <h1>My Best Friends List :</h1>
 
 
-<form method="post">
-    <ul>
-        <?php
-        $nameFilter = '';
-        if (!empty($friendsArray)) {
-            $i = 0;
-            foreach ($friendsArray as $FName) {
-                if (isset($_POST['nameFilter']) && strlen(trim($_POST['nameFilter'])) > 0) {
-                    $nameFilter = $_POST['nameFilter'];
-                    if (isset($_POST['startingWith']) && $_POST['startingWith'] === 'true') {
-                        if ((strpos($FName, $nameFilter) === 0))
-                            echo "<li>$FName<button type='submit' name='delete' value='$i'>Delete</button></li>";
+    <form method="post">
+        <ul>
+            <?php
+            $nameFilter = '';
+            if (!empty($friendsArray)) {
+                $i = 0;
+                foreach ($friendsArray as $FName) {
+                    if (isset($_POST['nameFilter']) && strlen(trim($_POST['nameFilter'])) > 0) {
+                        $nameFilter = $_POST['nameFilter'];
+                        if (isset($_POST['startingWith']) && $_POST['startingWith'] === 'true') {
+                            if ((strpos($FName, $nameFilter) === 0))
+                                echo "<li>$FName<button type='submit' name='delete' value='$i'>Delete</button></li>";
+                        } else
+                            if (strstr($FName, $nameFilter))
+                                echo "<li>$FName<button type='submit' name='delete' value='$i'>Delete</button></li>";
                     } else
-                        if (strstr($FName, $nameFilter))
-                            echo "<li>$FName<button type='submit' name='delete' value='$i'>Delete</button></li>";
-                } else
-                    echo "<li>$FName<button type='submit' name='delete' value='$i'>Delete</button></li>";
-                $i++;
+                        echo "<li>$FName<button type='submit' name='delete' value='$i'>Delete</button></li>";
+                    $i++;
+                }
             }
-        }
-        ?>
-    </ul>
-</form>
+            ?>
+        </ul>
+    </form>
 
 
-<form action="index.php" method="post">
-    <input type="text" name="nameFilter" id="nameFilter" value="<?php echo $nameFilter; ?>"/>
-    <input type="checkbox"
-           name="startingWith" <?php echo (isset($_POST['startingWith']) && $_POST['startingWith']) ? 'checked' : ''; ?>
-           value="true">Only names starting with</input>
-    <input type="submit" value="Filter List"/>
+    <form action="index.php" method="post">
+        <input type="text" name="nameFilter" id="nameFilter" value="<?php echo $nameFilter; ?>"/>
+        <input type="checkbox"
+               name="startingWith" <?php echo (isset($_POST['startingWith']) && $_POST['startingWith']) ? 'checked' : ''; ?>
+               value="true">Only names starting with</input>
+        <input type="submit" value="Filter List"/>
 
-</form>
+    </form>
 
-<br>
-<br>
+    <br>
+    <br>
 <?php include("footer.php"); ?>
