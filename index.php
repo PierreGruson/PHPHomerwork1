@@ -38,10 +38,10 @@ fclose($file);
     <br>
     <form action="index.php" method="post">
         Name: <input type="text" name="name">
-        <input type="submit">
+        <input type="submit" value="Add new friend">
     </form>
 
-    <h1>My Best Friends List :</h1>
+    <h1>My best friends :</h1>
 
     <form method="post">
         <ul>
